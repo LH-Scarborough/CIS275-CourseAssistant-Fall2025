@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIS 275 Course Assistant</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f0efef 0%, #e0dfdf 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .chatbot-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 600px;
+        }
+        .chatbot-header {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .chatbot-header h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        .chatbot-header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+        .message.user {
+            justify-content: flex-end;
+        }
+        .message-content {
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            word-wrap: break-word;
+            line-height: 1.4;
+        }
+        .message.bot .message-content {
+            background: #e3f2fd;
+            color: #1976d2;
+            border-bottom-left-radius: 5px;
+        }
+        .message.user .message-content {
+            background: #4CAF50;
+            color: white;
+            border-bottom-right-radius: 5px;
+        }
+        .message-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            margin: 0 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .message.bot .message-avatar {
+            background: #2196F3;
+            color: white;
+        }
+        .message.user .message-avatar {
+            background: #4CAF50;
+            color: white;
+        }
+        .chat-input {
+            display: flex;
+            padding: 20px;
+            border-top: 1px solid #e0e0e0;
+            background: white;
+        }
+        .chat-input input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            outline: none;
+            font-size: 14px;
+        }
+        .chat-input input:focus {
+            border-color: #4CAF50;
+        }
+        .chat-input button {
+            margin-left: 10px;
+            padding: 12px 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+        .chat-input button:hover {
+            background: #45a049;
+        }
+        .chat-input button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .quick-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .quick-button {
+            padding: 8px 16px;
+            background: #e8f5e8;
+            color: #2e7d32;
+            border: 1px solid #4CAF50;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+        .quick-button:hover {
+            background: #4CAF50;
+            color: white;
+        }
+        .typing-indicator {
+            display: none;
+            padding: 10px;
+            font-style: italic;
+            color: #666;
+        }
+        .course-info {
+            background: #f0f8ff;
+            border: 1px solid #b3d9ff;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        .course-info h3 {
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+        .course-info ul {
+            margin-left: 20px;
+        }
+        .course-info li {
+            margin-bottom: 5px;
+        }
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+        }
+        .schedule-table th,
+        .schedule-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .schedule-table th {
+            background: #f2f2f2;
+            font-weight: bold;
+        }
+        .grade-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 10px 0;
+        }
+        .grade-item {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #4CAF50;
+        }
+        .grade-item h4 {
+            color: #2e7d32;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="chatbot-container">
+        <div class="chatbot-header">
+            <h1 id="course-title">CIS 275 Course Assistant</h1>
+            <p id="course-subtitle">Ask me anything about your course!</p>
+        </div>
+        
+        <div class="chat-messages" id="chat-messages">
+            <div class="message bot">
+                <div class="message-avatar">🤖</div>
+                <div class="message-content">
+                    <p>Hello! I'm your CIS 275 Course Assistant. I can help you with information about:</p>
+                    <div class="quick-buttons">
+                        <span class="quick-button" onclick="askQuestion('course info')">Course Information</span>
+                        <span class="quick-button" onclick="askQuestion('instructor')">Instructor Details</span>
+                        <span class="quick-button" onclick="askQuestion('schedule')">Course Schedule</span>
+                        <span class="quick-button" onclick="askQuestion('grading')">Grading Policy</span>
+                        <span class="quick-button" onclick="askQuestion('materials')">Required Materials</span>
+                        <span class="quick-button" onclick="askQuestion('objectives')">Course Objectives</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="typing-indicator" id="typing-indicator">
+            Assistant is typing...
+        </div>
+        
+        <div class="chat-input">
+            <input type="text" id="user-input" placeholder="Type your question here..." onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()" id="send-button">Send</button>
+        </div>
+    </div>
+
+    <script>
+        // Course data - this should match the JSON structure
+        const courseData = {
+            "course": {
+                "code": "CIS 275",
+                "title": "Workstation Administration",
+                "credits": 3,
+                "description": "This course provides a study of client system administration in a network environment. Topics include installing, monitoring, maintaining, and troubleshooting client operating system software and managing hardware devices and shared resources. Students gain hands-on experience in client operating system installation and basic administration of network workstations.",
+                "prerequisites": "None",
+                "mode": "Online",
+                "location": "Online",
+                "startDate": "August 18, 2025",
+                "endDate": "December 11, 2025"
+            },
+            "instructor": {
+                "name": "Mr. Lee Scarborough",
+                "office": "Forrester Hall 105",
+                "phone": "(334) 348-4923",
+                "email": "lscarborough@escc.edu",
+                "teamsLink": "https://outlook.office.com/bookwithme/user/eb6ec76b5a1a45b3a219820fe67e24e3@escc.edu?anonymous&ep=plink",
+                "officeHours": {
+                    "mondayWednesday": [
+                        "8:00 - 9:00 am",
+                        "10:15 - 11:00 am",
+                        "2:30 - 4:00 pm"
+                    ],
+                    "tuesdayThursday": [
+                        "8:00 - 9:00 am",
+                        "10:15 - 11:00 am",
+                        "11:30 am - 1:00 pm",
+                        "2:15 - 4:00 pm"
+                    ]
+                },
+                "responseTime": {
+                    "grading": "7 days",
+                    "email": "24 hours Monday-Thursday, Friday-Sunday emails responded to on Monday"
+                }
+            },
+            "evaluation": {
+                "quizzes": {
+                    "percentage": 30,
+                    "description": "Students will complete a quiz for each learning module"
+                },
+                "labs": {
+                    "percentage": 30,
+                    "description": "Students will complete virtual labs through the uCertify course platform for each learning module"
+                },
+                "exams": {
+                    "percentage": 20,
+                    "description": "Students will complete one proctored quiz, practice exams, and one final exam"
+                },
+                "discussions": {
+                    "percentage": 20,
+                    "description": "Students will complete multiple discussion assignments as part of the learning modules"
+                }
+            },
+            "grading": {
+                "scale": {
+                    "A": "90-100%",
+                    "B": "80-89%",
+                    "C": "70-79%",
+                    "D": "60-69%",
+                    "F": "0-59%"
+                },
+                "droppedGrades": {
+                    "labs": 5,
+                    "practiceQuestions": 5,
+                    "note": "Dropped scores are automatic and do not negatively affect final grade"
+                }
+            },
+            "materials": {
+                "required": [
+                    {
+                        "title": "uCertify Endpoint Administrator (MD-102)",
+                        "type": "Digital access code only",
+                        "note": "No physical book. Purchase through ESCC bookstore",
+                        "bookstoreUrl": "https://bookstore.escc.edu/textbooks",
+                        "bookstoreContact": {
+                            "email": "bookstore@escc.edu",
+                            "phone": "334-347-2623"
+                        }
+                    }
+                ]
+            },
+            "objectives": [
+                "Deploy Windows client",
+                "Manage identity and compliance",
+                "Manage, maintain, and protect devices",
+                "Manage applications"
+            ],
+            "schedule": [
+                {
+                    "dates": "August 18 - 25",
+                    "lesson": "Start Here - attendance verification quiz",
+                    "due": "August 22 12:00 pm (noon)"
+                },
+                {
+                    "dates": "August 25 - September 8",
+                    "lesson": "Lesson 1: Configuring Users",
+                    "due": "September 8, 2025"
+                },
+                {
+                    "dates": "September 8 - 22",
+                    "lesson": "Lesson 2: Deploy Windows Client",
+                    "due": "September 22, 2025"
+                },
+                {
+                    "dates": "September 22 - October 6",
+                    "lesson": "Lesson 3: Managing Identity and Access",
+                    "due": "October 6, 2025"
+                },
+                {
+                    "dates": "October 6 - 20",
+                    "lesson": "Lesson 4: Planning and Managing Microsoft Intune",
+                    "due": "October 20, 2025"
+                },
+                {
+                    "dates": "October 20 - November 3",
+                    "lesson": "Lesson 5: Managing Devices",
+                    "due": "November 3, 2025"
+                },
+                {
+                    "dates": "November 3 - 17",
+                    "lesson": "Lesson 6: Managing Security",
+                    "due": "November 17, 2025"
+                },
+                {
+                    "dates": "November 17 - 24",
+                    "lesson": "Lesson 7: Monitoring Devices",
+                    "due": "November 24, 2025"
+                },
+                {
+                    "dates": "November 24 - 28",
+                    "lesson": "Thanksgiving Holidays",
+                    "due": null
+                },
+                {
+                    "dates": "December 1 - 8",
+                    "lesson": "Exam Review",
+                    "due": "December 8, 2025"
+                },
+                {
+                    "dates": "December 8 - 11",
+                    "lesson": "Final exam",
+                    "due": "December 11, 2025"
+                }
+            ]
+        };
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            updateHeader();
+        });
+
+        function updateHeader() {
+            document.getElementById('course-title').textContent = `${courseData.course.code} Course Assistant`;
+            document.getElementById('course-subtitle').textContent = `${courseData.course.title} - Ask me anything about your course!`;
+        }
+
+        function addMessage(content, isUser = false) {
+            const messagesContainer = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
+            
+            messageDiv.innerHTML = `
+                <div class="message-avatar">${isUser ? '👤' : '🤖'}</div>
+                <div class="message-content">${content}</div>
+            `;
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function showTyping() {
+            document.getElementById('typing-indicator').style.display = 'block';
+        }
+
+        function hideTyping() {
+            document.getElementById('typing-indicator').style.display = 'none';
+        }
+
+        function askQuestion(topic) {
+            const questions = {
+                'course info': 'Tell me about the course information',
+                'instructor': 'Who is the instructor and how can I contact them?',
+                'schedule': 'What is the course schedule?',
+                'grading': 'How is the course graded?',
+                'materials': 'What materials do I need for this course?',
+                'objectives': 'What are the course objectives?'
+            };
+            
+            const question = questions[topic];
+            if (question) {
+                document.getElementById('user-input').value = question;
+                sendMessage();
+            }
+        }
+
+        function generateResponse(userInput) {
+            const input = userInput.toLowerCase();
+            
+            if (input.includes('course info') || input.includes('about the course')) {
+                return `
+                    <div class="course-info">
+                        <h3>${courseData.course.code}: ${courseData.course.title}</h3>
+                        <p><strong>Credits:</strong> ${courseData.course.credits}</p>
+                        <p><strong>Mode:</strong> ${courseData.course.mode}</p>
+                        <p><strong>Duration:</strong> ${courseData.course.startDate} - ${courseData.course.endDate}</p>
+                        <p><strong>Prerequisites:</strong> ${courseData.course.prerequisites}</p>
+                        <p><strong>Description:</strong> ${courseData.course.description}</p>
+                    </div>
+                `;
+            }
+            
+            if (input.includes('instructor') || input.includes('contact')) {
+                return `
+                    <div class="course-info">
+                        <h3>Instructor Information</h3>
+                        <p><strong>Name:</strong> ${courseData.instructor.name}</p>
+                        <p><strong>Office:</strong> ${courseData.instructor.office}</p>
+                        <p><strong>Phone:</strong> ${courseData.instructor.phone}</p>
+                        <p><strong>Email:</strong> ${courseData.instructor.email}</p>
+                        <p><strong>Office Hours:</strong></p>
+                        <ul>
+                            <li><strong>Monday & Wednesday:</strong> ${courseData.instructor.officeHours.mondayWednesday.join(', ')}</li>
+                            <li><strong>Tuesday & Thursday:</strong> ${courseData.instructor.officeHours.tuesdayThursday.join(', ')}</li>
+                        </ul>
+                        <p><strong>Response Time:</strong></p>
+                        <ul>
+                            <li>Grading: ${courseData.instructor.responseTime.grading}</li>
+                            <li>Email: ${courseData.instructor.responseTime.email}</li>
+                        </ul>
+                    </div>
+                `;
+            }
+            
+            if (input.includes('schedule') || input.includes('dates')) {
+                let scheduleHtml = `
+                    <div class="course-info">
+                        <h3>Course Schedule</h3>
+                        <table class="schedule-table">
+                            <thead>
+                                <tr>
+                                    <th>Dates</th>
+                                    <th>Lesson</th>
+                                    <th>Due Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+                
+                courseData.schedule.forEach(item => {
+                    scheduleHtml += `
+                        <tr>
+                            <td>${item.dates}</td>
+                            <td>${item.lesson}</td>
+                            <td>${item.due || 'N/A'}</td>
+                        </tr>
+                    `;
+                });
+                
+                scheduleHtml += `
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+                
+                return scheduleHtml;
+            }
+            
+            if (input.includes('grading') || input.includes('grade')) {
+                return `
+                    <div class="course-info">
+                        <h3>Grading Information</h3>
+                        <div class="grade-breakdown">
+                            <div class="grade-item">
+                                <h4>Quizzes (${courseData.evaluation.quizzes.percentage}%)</h4>
+                                <p>${courseData.evaluation.quizzes.description}</p>
+                            </div>
+                            <div class="grade-item">
+                                <h4>Labs (${courseData.evaluation.labs.percentage}%)</h4>
+                                <p>${courseData.evaluation.labs.description}</p>
+                            </div>
+                            <div class="grade-item">
+                                <h4>Exams (${courseData.evaluation.exams.percentage}%)</h4>
+                                <p>${courseData.evaluation.exams.description}</p>
+                            </div>
+                            <div class="grade-item">
+                                <h4>Discussions (${courseData.evaluation.discussions.percentage}%)</h4>
+                                <p>${courseData.evaluation.discussions.description}</p>
+                            </div>
+                        </div>
+                        <h4>Grading Scale:</h4>
+                        <ul>
+                            <li>A: ${courseData.grading.scale.A}</li>
+                            <li>B: ${courseData.grading.scale.B}</li>
+                            <li>C: ${courseData.grading.scale.C}</li>
+                            <li>D: ${courseData.grading.scale.D}</li>
+                            <li>F: ${courseData.grading.scale.F}</li>
+                        </ul>
+                        <p><strong>Note:</strong> ${courseData.grading.droppedGrades.note}</p>
+                    </div>
+                `;
+            }
+            
+            if (input.includes('materials') || input.includes('textbook') || input.includes('book')) {
+                return `
+                    <div class="course-info">
+                        <h3>Required Materials</h3>
+                        <p><strong>Textbook:</strong> ${courseData.materials.required[0].title}</p>
+                        <p><strong>Type:</strong> ${courseData.materials.required[0].type}</p>
+                        <p><strong>Note:</strong> ${courseData.materials.required[0].note}</p>
+                        <p><strong>Bookstore:</strong> <a href="${courseData.materials.required[0].bookstoreUrl}" target="_blank">ESCC Bookstore</a></p>
+                        <p><strong>Contact:</strong> ${courseData.materials.required[0].bookstoreContact.email} or ${courseData.materials.required[0].bookstoreContact.phone}</p>
+                    </div>
+                `;
+            }
+            
+            if (input.includes('objectives') || input.includes('goals')) {
+                return `
+                    <div class="course-info">
+                        <h3>Course Objectives</h3>
+                        <p>By the end of this course, students will be able to:</p>
+                        <ul>
+                            ${courseData.objectives.map(obj => `<li>${obj}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+            
+            return `I can help you with information about course details, instructor contact, schedule, grading, materials, and objectives. Try asking about any of these topics, or use the quick buttons for common questions.`;
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('user-input');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            addMessage(message, true);
+            input.value = '';
+            
+            showTyping();
+            
+            setTimeout(() => {
+                hideTyping();
+                const response = generateResponse(message);
+                addMessage(response);
+            }, 1000);
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+    </script>
+</body>
+</html>
