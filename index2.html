@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIS 134 Syllabus Assistant</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f0efef 0%, #e0dfdf 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .chatbot-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 600px;
+        }
+
+        .chatbot-header {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .chatbot-header h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .chatbot-header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            word-wrap: break-word;
+        }
+
+        .message.bot .message-content {
+            background: #e3f2fd;
+            color: #1976d2;
+            border-bottom-left-radius: 5px;
+        }
+
+        .message.user .message-content {
+            background: #4CAF50;
+            color: white;
+            border-bottom-right-radius: 5px;
+        }
+
+        .message-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            margin: 0 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .message.bot .message-avatar {
+            background: #2196F3;
+            color: white;
+        }
+
+        .message.user .message-avatar {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .chat-input-container {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .chat-input-wrapper {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .chat-input:focus {
+            border-color: #4CAF50;
+        }
+
+        .send-button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+
+        .send-button:hover {
+            background: #45a049;
+        }
+
+        .send-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .typing-indicator {
+            display: none;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+            margin-left: 42px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #bbb;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        .quick-questions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .quick-question {
+            background: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            padding: 8px 12px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quick-question:hover {
+            background: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        .loading-message {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            padding: 20px;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            
+            .chatbot-container {
+                height: 500px;
+            }
+            
+            .message-content {
+                max-width: 85%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="chatbot-container">
+        <div class="chatbot-header">
+            <h1>CIS 275 Course Assistant - Fall 2025</h1>
+            <p>Ask me anything about your course!</p>
+        </div>
+        
+        <div class="chat-messages" id="chatMessages">
+            <div class="loading-message" id="loadingMessage">
+                🤖 Loading course information...
+            </div>
+        </div>
+        
+        <div class="typing-indicator" id="typingIndicator">
+            <div class="typing-dots">
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            </div>
+        </div>
+        
+        <div class="chat-input-container">
+            <div class="chat-input-wrapper">
+                <input 
+                    type="text" 
+                    class="chat-input" 
+                    id="chatInput" 
+                    placeholder="Ask about grades, due dates, instructor info..."
+                    disabled
+                />
+                <button class="send-button" id="sendButton" disabled>
+                    📤
+                </button>
+            </div>
+            <div class="quick-questions" id="quickQuestions" style="display: none;">
+                <span class="quick-question" data-question="Who is the instructor?">👨‍🏫 Instructor</span>
+                <span class="quick-question" data-question="What are the office hours?">🕐 Office Hours</span>
+                <span class="quick-question" data-question="What is the course schedule?">📅 Course Schedule</span>
+                <span class="quick-question" data-question="What books do I need?">📚 Course Materials</span>
+                <span class="quick-question" data-question="How do I get help?">❓ Get Help</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class SyllabusChatbot {
+            constructor() {
+                this.syllabus = {};
+                this.isLoaded = false;
+                this.init();
+            }
+
+            async init() {
+                await this.loadSyllabus();
+                this.setupEventListeners();
+                this.showWelcomeMessage();
+            }
+
+            async loadSyllabus() {
+                try {
+                    // Update this URL to your GitHub raw file URL
+                    const response = await fetch('https://raw.githubusercontent.com/LH-Scarborough/CIS275-CourseAssistant-Fall2025/main/CIS275_syllabus.json');
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
+                    this.syllabus = await response.json();
+                    this.isLoaded = true;
+                    
+                    // Enable input and show quick questions
+                    document.getElementById('chatInput').disabled = false;
+                    document.getElementById('sendButton').disabled = false;
+                    document.getElementById('quickQuestions').style.display = 'flex';
+                    document.getElementById('loadingMessage').style.display = 'none';
+                    
+                } catch (error) {
+                    console.error('Failed to load syllabus:', error);
+                    this.showMessage('bot', '❌ Sorry, I couldn\'t load the course information. Please try refreshing the page or try again later.');
+                    document.getElementById('loadingMessage').style.display = 'none';
+                }
+            }
+
+            setupEventListeners() {
+                const input = document.getElementById('chatInput');
+                const sendButton = document.getElementById('sendButton');
+                const quickQuestions = document.getElementById('quickQuestions');
+
+                // Send message on Enter key
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        this.sendMessage();
+                    }
+                });
+
+                // Send message on button click
+                sendButton.addEventListener('click', () => this.sendMessage());
+
+                // Quick question clicks
+                quickQuestions.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('quick-question')) {
+                        const question = e.target.getAttribute('data-question');
+                        input.value = question;
+                        this.sendMessage();
+                    }
+                });
+            }
+
+            showWelcomeMessage() {
+                setTimeout(() => {
+                    this.showMessage('bot', `👋 Hi! I'm your CIS 134 course assistant. I can help you with:
+                    
+• Course information and schedule
+• Grading policies and breakdowns  
+• Assignment due dates
+• Instructor contact information
+• Course policies and procedures
+
+Try asking me something or click the quick questions below!`);
+                }, 500);
+            }
+
+            sendMessage() {
+                const input = document.getElementById('chatInput');
+                const message = input.value.trim();
+                
+                if (!message) return;
+                
+                this.showMessage('user', message);
+                input.value = '';
+                
+                // Show typing indicator
+                this.showTyping();
+                
+                // Process response with delay for better UX
+                setTimeout(() => {
+                    this.hideTyping();
+                    const response = this.generateResponse(message);
+                    this.showMessage('bot', response);
+                }, 1000 + Math.random() * 1000);
+            }
+
+            showMessage(sender, text) {
+                const messagesContainer = document.getElementById('chatMessages');
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${sender}`;
+                
+                const avatar = document.createElement('div');
+                avatar.className = 'message-avatar';
+                avatar.textContent = sender === 'bot' ? '🤖' : '👤';
+                
+                const content = document.createElement('div');
+                content.className = 'message-content';
+                content.textContent = text;
+                
+                if (sender === 'bot') {
+                    messageDiv.appendChild(avatar);
+                    messageDiv.appendChild(content);
+                } else {
+                    messageDiv.appendChild(content);
+                    messageDiv.appendChild(avatar);
+                }
+                
+                messagesContainer.appendChild(messageDiv);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }
+
+            showTyping() {
+                document.getElementById('typingIndicator').style.display = 'flex';
+                const messagesContainer = document.getElementById('chatMessages');
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }
+
+            hideTyping() {
+                document.getElementById('typingIndicator').style.display = 'none';
+            }
+
+            generateResponse(question) {
+                if (!this.isLoaded) {
+                    return "I'm still loading the course information. Please try again in a moment.";
+                }
+
+                const q = question.toLowerCase();
+
+                // Instructor information
+                if (this.matchesKeywords(q, ['instructor', 'teacher', 'who teaches', 'professor'])) {
+                    return `📧 **${this.syllabus.instructor.name}** is your instructor.
+
+**Contact Information:**
+• Email: ${this.syllabus.instructor.email}
+• Phone: ${this.syllabus.instructor.phone}
+• Office: ${this.syllabus.instructor.office}
+
+You can also schedule virtual meetings via Microsoft Teams!`;
+                }
+
+                // Office hours
+                if (this.matchesKeywords(q, ['office hours', 'when available', 'meet'])) {
+                    return `🕐 **Office Hours:**
+${this.syllabus.instructor.office_hours.map(hours => `• ${hours}`).join('\n')}
+
+📍 Office Location: ${this.syllabus.instructor.office}
+💻 Virtual meetings available via Microsoft Teams`;
+                }
+
+                // Course dates and schedule
+                if (this.matchesKeywords(q, ['course dates', 'when start', 'when end', 'schedule'])) {
+                    return `📅 **Course start and end dates:** ${this.syllabus.course.dates}
+View the Course Schedule located in the Start Here module of the course. You can also ask me questions like: What assignments are due in week 2 of the course?`;
+                }
+
+                // Grading breakdown
+                if (this.matchesKeywords(q, ['grading breakdown', 'how graded', 'grade calculation', 'points', 'grading'])) {
+                    const components = this.syllabus.grading.components;
+                    return `📊 **Grading Breakdown:**
+• Review Questions: ${components["Review Questions"]}%
+• Labs: ${components.Labs}%  
+• Exams: ${components.Exams}%
+
+**Grade Scale:**
+${Object.entries(this.syllabus.grading.scale).map(([grade, range]) => `• ${grade}: ${range}`).join('\n')}
+
+**Good News:** Your ${this.syllabus.grading.dropped_grades.labs} lowest lab grades and ${this.syllabus.grading.dropped_grades.review_questions} lowest review question grades will be dropped!`;
+                }
+
+                       // Grades
+                if (this.matchesKeywords(q, ['grades', 'grade'])) {
+                    const components = this.syllabus.grading.components;
+                    return `It's good that you are concerned about your grades in the course. To view your current grades, click the Grades link in the navigation menu. Assignments not submitted by the due date will receive a zero. 
+                    How can you earn a good grade in the class? This is accomplished by viewing and spending time with each lesson, completing ALL work on time, and by asking questions of Mr. Scarborough.
+                    **Good News:** Your ${this.syllabus.grading.dropped_grades.labs} lowest lab grades and ${this.syllabus.grading.dropped_grades.review_questions} lowest review question grades will be dropped!
+                    Any other questions specific to grades can be found by viewing the course syllabus or asking Mr. Scarborough`;
+                }
+
+                // Specific week questions
+                if (this.matchesKeywords(q, ['week', 'due', 'assignment']) && /week\s*(\d+)/.test(q)) {
+                    const weekMatch = q.match(/week\s*(\d+)/);
+                    if (weekMatch) {
+                        const weekNum = parseInt(weekMatch[1]);
+                        const week = this.syllabus.schedule.find(w => w.week === weekNum);
+                        if (week) {
+                            return `📚 **Week ${week.week} (${week.dates}):**
+
+**Topics:**
+${week.topics.map(topic => `• ${topic}`).join('\n')}
+
+**Due Dates:**
+${week.due.map(due => `• ${due}`).join('\n')}`;
+                        }
+                    }
+                }
+
+                //Assignments
+                if (this.matchesKeywords(q, ['assignment', 'assignments'])) {
+                    return `You will have various assignment types to complete in the course, including practice questions, labs, and exams. Assignments are located under the Modules section of the course. Assignments not submitted by the due date will be given a zero.`;
+                }
+
+                // Final exam
+                if (this.matchesKeywords(q, ['final exam', 'final test', 'final'])) {
+                    const finalWeek = this.syllabus.schedule.find(week => 
+                        week.week === "Final" || week.week === 11 || 
+                        week.topics.some(topic => topic.toLowerCase().includes('final'))
+                    );
+                    return finalWeek ? 
+                        `📝 **Final Exam:** ${finalWeek.dates}
+
+The final exam covers all course material. Make sure to review all modules and complete practice exercises!` :
+                        "Final exam information not found. Please check your Canvas calendar or contact the instructor.";
+                }
+
+                // Late work policy
+                if (this.matchesKeywords(q, ['late work', 'late assignment', 'missed deadline', 'late', 'missed'])) {
+                    return `⏰ **Late Work Policy:**
+${this.syllabus.policies.late_work}
+
+💡 **Tip:** If you have extenuating circumstances, contact your instructor within 24 hours of the deadline.`;
+                }
+
+                // Academic honesty
+                if (this.matchesKeywords(q, ['plagiarism', 'academic honesty', 'cheating', 'cheat'])) {
+                    return `📋 **Academic Honesty Policy:**
+• ${this.syllabus.policies.academic_honesty.original_work}
+• ${this.syllabus.policies.academic_honesty.plagiarism}
+
+Always submit your own original work for this course!`;
+                }
+
+                // Textbook and materials
+                if (this.matchesKeywords(q, ['textbook', 'book', 'materials', 'access code'])) {
+                    return `📚 **Required Materials:**
+${this.syllabus.materials.textbook}
+
+**How to Get Access:**
+• Email: ${this.syllabus.materials.access.email}
+• Phone: ${this.syllabus.materials.access.phone}
+• ${this.syllabus.materials.access.in_person}`;
+                }
+
+                                // Proctoring
+                if (this.matchesKeywords(q, ['proctor', 'proctored', 'proctored exam', 'proctored quiz', 'honorlock', 'webcam'])) {
+                    return `📚 **Proctoring Policy**
+Students will take one proctored exam in this course. Students will be required to use the Honorlock browser extension. Full proctoring policies, requirements, and instructions are located in the Start Here module of the course. 
+Students will need to ensure they have a photo ID, webcam, and external webcam in order to meet the proctoring requirements. The specific proctored quiz that students will take will be listed in one of the weekly learning modules of the course.`
+                }
+
+                            // Attendance and Attendance Verification Quiz
+                if (this.matchesKeywords(q, ['attendance', 'attendance quiz', 'attendance verification'])) {
+                    return `📚 **Attendance Verification Quiz**
+The purpose of the mandatory attendance verification quiz is to document your attendance. Any student who does not complete this quiz will be 
+reported to the Registrar as a no-show and will be administratively removed from the course. Attendance verification is required before the disbursement of Pell Grant funds and student loans. 
+This quiz is also used to ensure that you have thoroughly reviewed and understood the course syllabus.`
+                }
+
+                              // Grades
+                if (this.matchesKeywords(q, ['grades', 'where are grades', 'find my grades'])) {
+                    return `To view your current grades in the class, click the Grades link in the course navigation menu.`
+                   
+                }
+
+                // Getting help
+                if (this.matchesKeywords(q, ['help', 'tutoring', 'assistance', 'support', 'issue', 'problem', 'tutor'])) {
+                    return `🆘 **Instructor Support:**
+• Email: ${this.syllabus.instructor.email}
+• Phone: ${this.syllabus.instructor.phone}
+• Office: ${this.syllabus.instructor.office}
+
+**Technial Issues**
+Contact Mr. Scarborough and use the Student Help & Support module in the course.
+
+ **Disability Services:** Contact ${this.syllabus.support.disability_services.contact} at ${this.syllabus.support.disability_services.email}
+
+**Tutoring:** ${this.syllabus.support.academic_assistance.tutoring}`
+                }
+
+                // Withdrawal information
+                if (this.matchesKeywords(q, ['withdraw', 'drop', 'last day'])) {
+                    return `🚪 **Withdrawal Information:**
+• Last day to withdraw: ${this.syllabus.policies.withdrawal.last_day}
+• ${this.syllabus.policies.withdrawal.note}
+
+Contact your advisor if you're considering withdrawal.`;
+                }
+
+                // Course objectives
+                if (this.matchesKeywords(q, ['objectives', 'what learn', 'course goals', 'skills'])) {
+                    return `🎯 **Course Objectives:**
+By the end of this course, you will be able to:
+
+${this.syllabus.objectives.map(obj => `• ${obj}`).join('\n')}
+`;
+                }
+
+                // Default response with suggestions
+                return `🤔 I'm not sure about that specific question. Try rephrasing your question or otherwise contact Mr. Scarborough`;
+            }
+
+            matchesKeywords(text, keywords) {
+                return keywords.some(keyword => text.includes(keyword.toLowerCase()));
+            }
+        }
+
+        // Initialize the chatbot when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new SyllabusChatbot();
+        });
+    </script>
+</body>
+</html>
