@@ -1,0 +1,218 @@
+{
+  "course": {
+    "code": "CIS 275",
+    "title": "Workstation Administration",
+    "credits": 3,
+    "description": "This course provides a study of client system administration in a network environment. Topics include installing, monitoring, maintaining, and troubleshooting client operating system software and managing hardware devices and shared resources. Students gain hands-on experience in client operating system installation and basic administration of network workstations.",
+    "prerequisites": "None",
+    "mode": "Online",
+    "location": "Online",
+    "startDate": "August 18, 2025",
+    "endDate": "December 11, 2025"
+  },
+  "instructor": {
+    "name": "Mr. Lee Scarborough",
+    "office": "Forrester Hall 105",
+    "phone": "(334) 348-4923",
+    "email": "lscarborough@escc.edu",
+    "teamsLink": "https://outlook.office.com/bookwithme/user/eb6ec76b5a1a45b3a219820fe67e24e3@escc.edu?anonymous&ep=plink",
+    "officeHours": {
+      "mondayWednesday": [
+        "8:00 - 9:00 am",
+        "10:15 - 11:00 am",
+        "2:30 - 4:00 pm"
+      ],
+      "tuesdayThursday": [
+        "8:00 - 9:00 am",
+        "10:15 - 11:00 am",
+        "11:30 am - 1:00 pm",
+        "2:15 - 4:00 pm"
+      ]
+    },
+    "responseTime": {
+      "grading": "7 days",
+      "email": "24 hours Monday-Thursday, Friday-Sunday emails responded to on Monday"
+    }
+  },
+  "division": {
+    "chair": "Jennifer Nelson",
+    "office": "Forrester Hall 103",
+    "phone": "(334) 347-2623 ext. 2338",
+    "email": "jnelson@escc.edu"
+  },
+  "materials": {
+    "required": [
+      {
+        "title": "uCertify Endpoint Administrator (MD-102)",
+        "type": "Digital access code only",
+        "note": "No physical book. Purchase through ESCC bookstore",
+        "bookstoreUrl": "https://bookstore.escc.edu/textbooks",
+        "bookstoreContact": {
+          "email": "bookstore@escc.edu",
+          "phone": "334-347-2623"
+        }
+      }
+    ],
+    "instructorProvided": [
+      "Canvas LMS",
+      "uCertify Learning Platform"
+    ]
+  },
+  "objectives": [
+    "Deploy Windows client",
+    "Manage identity and compliance",
+    "Manage, maintain, and protect devices",
+    "Manage applications"
+  ],
+  "evaluation": {
+    "quizzes": {
+      "percentage": 30,
+      "description": "Students will complete a quiz for each learning module"
+    },
+    "labs": {
+      "percentage": 30,
+      "description": "Students will complete virtual labs through the uCertify course platform for each learning module"
+    },
+    "exams": {
+      "percentage": 20,
+      "description": "Students will complete one proctored quiz, practice exams, and one final exam"
+    },
+    "discussions": {
+      "percentage": 20,
+      "description": "Students will complete multiple discussion assignments as part of the learning modules"
+    }
+  },
+  "grading": {
+    "scale": {
+      "A": "90-100%",
+      "B": "80-89%",
+      "C": "70-79%",
+      "D": "60-69%",
+      "F": "0-59%"
+    },
+    "droppedGrades": {
+      "labs": 5,
+      "practiceQuestions": 5,
+      "note": "Dropped scores are automatic and do not negatively affect final grade"
+    }
+  },
+  "policies": {
+    "assignments": {
+      "submission": "All assignments must be submitted by the given due date",
+      "dueDateSources": [
+        "Canvas learning modules",
+        "Canvas Calendar",
+        "Course Schedule",
+        "Syllabus"
+      ]
+    },
+    "penalties": {
+      "lateWork": "Zero for assignment not submitted by due date",
+      "extenuatingCircumstances": "Considered if student provides notice at least 24 hours prior to due date, or within 24 hours after due date",
+      "documentation": "Instructor may request documentation for proof of extenuating circumstances"
+    },
+    "finalGrades": {
+      "location": "Student Information Center via MyESCC link",
+      "access": "Log into student account, not Canvas",
+      "communication": "Final grades not given via email or phone"
+    },
+    "withdrawal": {
+      "lastDay": "July 24th",
+      "note": "Withdrawal can affect eligibility for federal financial aid"
+    },
+    "academicHonesty": {
+      "originalWork": "All work must be your own and written exclusively for this course",
+      "recycling": "Students may not recycle or reuse work from another course",
+      "plagiarism": {
+        "consequence": "Zero on assignment, F for final course grade, reported to Dean of Instruction",
+        "inadvertent": "Dealt with case-by-case basis, most result in failing grade on assignment"
+      }
+    },
+    "conduct": {
+      "expectations": [
+        "Accept personal responsibility for decisions and actions",
+        "Manage time appropriately",
+        "Engage with course and complete assignments by due date",
+        "Ask questions and communicate with instructor as needed",
+        "Use professional communication"
+      ]
+    }
+  },
+  "schedule": [
+    {
+      "dates": "August 18 - 25",
+      "lesson": "Start Here - attendance verification quiz",
+      "due": "August 22 12:00 pm (noon)"
+    },
+    {
+      "dates": "August 25 - September 8",
+      "lesson": "Lesson 1: Configuring Users",
+      "due": "September 8, 2025"
+    },
+    {
+      "dates": "September 8 - 22",
+      "lesson": "Lesson 2: Deploy Windows Client",
+      "due": "September 22, 2025"
+    },
+    {
+      "dates": "September 22 - October 6",
+      "lesson": "Lesson 3: Managing Identity and Access",
+      "due": "October 6, 2025"
+    },
+    {
+      "dates": "October 6 - 20",
+      "lesson": "Lesson 4: Planning and Managing Microsoft Intune",
+      "due": "October 20, 2025"
+    },
+    {
+      "dates": "October 20 - November 3",
+      "lesson": "Lesson 5: Managing Devices",
+      "due": "November 3, 2025"
+    },
+    {
+      "dates": "November 3 - 17",
+      "lesson": "Lesson 6: Managing Security",
+      "due": "November 17, 2025"
+    },
+    {
+      "dates": "November 17 - 24",
+      "lesson": "Lesson 7: Monitoring Devices",
+      "due": "November 24, 2025"
+    },
+    {
+      "dates": "November 24 - 28",
+      "lesson": "Thanksgiving Holidays",
+      "due": null
+    },
+    {
+      "dates": "December 1 - 8",
+      "lesson": "Exam Review",
+      "due": "December 8, 2025"
+    },
+    {
+      "dates": "December 8 - 11",
+      "lesson": "Final exam",
+      "due": "December 11, 2025"
+    }
+  ],
+  "services": {
+    "disability": {
+      "compliance": "Americans with Disabilities Act, 1990",
+      "contact": {
+        "name": "Dava Leverette",
+        "title": "ESCC ADA Services Coordinator",
+        "email": "dleverette@escc.edu"
+      }
+    },
+    "academicAssistance": {
+      "primary": "Contact instructor first",
+      "tutoring": {
+        "service": "Boll Weevil Central",
+        "cost": "Free to all students",
+        "access": "Accept invitation in Canvas dashboard during first week"
+      },
+      "additionalSupport": "Student Support Services program"
+    }
+  },
+  "disclaimer": "An addendum to this syllabus will be provided in the event that ESCC or an individual course should experience the need for an all in-person class to transition to remote instruction including synchronous, asynchronous or hybrid format due to pandemic or other event warranting the need for such plans."
+}
