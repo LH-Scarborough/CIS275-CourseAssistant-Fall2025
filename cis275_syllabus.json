@@ -116,6 +116,28 @@
       "access": "Log into student account, not Canvas",
       "communication": "Final grades not given via email or phone"
     },
+    "proctoring": {
+      "policy": "Enterprise State Community College utilizes remote proctoring to ensure online academic integrity. Each distance education course will include a practice proctored quiz before the first proctored exam.",
+      "requirements": "Students must complete practice quiz in timely manner to ensure they have equipment and software needed",
+      "responsibility": "Students in online courses must fulfill their responsibilities in arranging and taking each proctored exam",
+      "courseSpecific": "This course contains one proctored quiz available in the Modules section"
+    },
+    "honorlock": {
+      "description": "ESCC utilizes Honorlock online proctoring solution for distance learning courses",
+      "requirements": [
+        "Download and install Chrome extension",
+        "Provide valid photo ID",
+        "Complete scan of testing environment"
+      ],
+      "validIds": [
+        "Driver's license",
+        "U.S. passport",
+        "College-issued student ID",
+        "Military ID"
+      ],
+      "recording": "Audio, video, and student's computer screen are recorded during exam and reviewed by instructors",
+      "practiceExam": "Honorlock practice exam walks through Chrome extension installation process"
+    },
     "withdrawal": {
       "lastDay": "July 24th",
       "note": "Withdrawal can affect eligibility for federal financial aid"
@@ -127,6 +149,11 @@
         "consequence": "Zero on assignment, F for final course grade, reported to Dean of Instruction",
         "inadvertent": "Dealt with case-by-case basis, most result in failing grade on assignment"
       }
+    },
+    "artificialIntelligence": {
+      "encouragement": "Students are encouraged to use AI as a tool to assist with learning and efficiency in this course",
+      "discussions": "For discussion assignments, students should compose their own thoughts, but are encouraged to use AI tools to revise, enhance, and improve their own writings",
+      "violation": "Submitting any work that is not your own is a violation of the college's Academic Honesty policy and will be subject to penalties"
     },
     "conduct": {
       "expectations": [
