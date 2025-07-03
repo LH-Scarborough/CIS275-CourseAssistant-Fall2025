@@ -288,7 +288,7 @@
             async loadSyllabus() {
                 try {
                     // Update this URL to your GitHub raw file URL
-                    const response = await fetch('https://raw.githubusercontent.com/LH-Scarborough/CIS275-CourseAssistant-Fall2025/main/CIS275_syllabus.json');
+                    const response = await fetch('https://raw.githubusercontent.com/LH-Scarborough/CIS275-CourseAssistant-Fall2025/main/cis275_syllabus.json');
                     
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
