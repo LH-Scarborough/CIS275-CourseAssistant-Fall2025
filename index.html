@@ -427,7 +427,7 @@ You can also schedule virtual meetings via Microsoft Teams!`;
                 // Office hours
                 if (this.matchesKeywords(q, ['office hours', 'when available', 'meet'])) {
                     return `🕐 **Office Hours:**
-${this.syllabus.instructor.office_hours.map(hours => `• ${hours}`).join('\n')}
+${this.syllabus.instructor.officeHours.map(hours => `• ${hours}`).join('\n')}
 
 📍 Office Location: ${this.syllabus.instructor.office}
 💻 Virtual meetings available via Microsoft Teams`;
