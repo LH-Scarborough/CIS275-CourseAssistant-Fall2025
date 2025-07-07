@@ -566,31 +566,7 @@
                     </div>
                 `;
             }
-
-           if (input.includes('proctoring') || input.includes('proctor') || input.includes('proctored quiz' input.includes('proctored')) {
-                return `
-                    <div class="course-info">
-                        <h3>${courseData.course.code}: ${courseData.course.title}</h3>
-                        <p> ${courseData.proctoring.policy}</p>
-                        <p> ${courseData.proctoring.requirements}</p>
-                        <p> ${courseData.proctoring.responsibility}</p>
-                        <p> ${courseData.proctoring.courseSpecific}</p>
-                    </div>
-                `;
-            }
-          
-            if (input.includes('Honorlock') || input.includes('HonorLock') || input.includes('honorlock' input.includes('honor lock') || input.includes('webcam') || input.includes('external webcam')) {
-                return `
-                    <div class="course-info">
-                        <h3>${courseData.course.code}: ${courseData.course.title}</h3>
-                        <p> ${courseData.honorlock.description}</p>
-                        <p> ${courseData.honorlock.requirements}</p>
-                        <p> ${courseData.honorlock.validIds}</p>
-                        <p> ${courseData.honorlock.recording}</p>
-                        <p> ${courseData.honorlock.practiceExam}</p>
-                    </div>
-                `;
-            }  
+ 
 
            
             return `I am not sure about that. Try rephrasing your question using different words. If I can't find the answer, please contact Mr. Scarborough`;
