@@ -166,8 +166,8 @@
     }
   },
   {
-  "title": "External Webcam",
-  "requirement": {
+
+  "webcam": {
     "description": "This course requires the use of an external webcam, one that connects to an external computer port (such as a USB) rather than a webcam built into the computer.",
     "built_in_camera_sufficient": false,
     "purpose": "To provide a view across the student's work area",
