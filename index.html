@@ -450,7 +450,7 @@
                 `;
             }
             
-            if (input.includes('instructor') || input.includes('contact')) {
+            if (input.includes('instructor') || input.includes('contact') || input.includes('teacher') || input.includes('professor')) {
                 return `
                     <div class="course-info">
                         <h3>Instructor Information</h3>
@@ -472,7 +472,7 @@
                 `;
             }
             
-            if (input.includes('schedule') || input.includes('dates')) {
+            if (input.includes('schedule') || input.includes('dates') || input.includes('calendar')) {
                 let scheduleHtml = `
                     <div class="course-info">
                         <h3>Course Schedule</h3>
@@ -537,11 +537,12 @@
                             <li>F: ${courseData.grading.scale.F}</li>
                         </ul>
                         <p><strong>Note:</strong> ${courseData.grading.droppedGrades.note}</p>
+                        <p>All current grades for the class are available through the Grades link in the Canvas course.</p>
                     </div>
                 `;
             }
             
-            if (input.includes('materials') || input.includes('textbook') || input.includes('book')) {
+            if (input.includes('materials') || input.includes('textbook') || input.includes('book') || input.includes('code') || input.includes('access code') || input.includes('codes') || input.includes('access codes') || input.includes('book store')) {
                 return `
                     <div class="course-info">
                         <h3>Required Materials</h3>
@@ -566,8 +567,33 @@
                 `;
             }
 
+           if (input.includes('proctoring') || input.includes('proctor') || input.includes('proctored quiz' input.includes('proctored')) {
+                return `
+                    <div class="course-info">
+                        <h3>${courseData.course.code}: ${courseData.course.title}</h3>
+                        <p> ${courseData.proctoring.policy}</p>
+                        <p> ${courseData.proctoring.requirements}</p>
+                        <p> ${courseData.proctoring.responsibility}</p>
+                        <p> ${courseData.proctoring.courseSpecific}</p>
+                    </div>
+                `;
+            }
+          
+            if (input.includes('Honorlock') || input.includes('HonorLock') || input.includes('honorlock' input.includes('honor lock') || input.includes('webcam') || input.includes('external webcam')) {
+                return `
+                    <div class="course-info">
+                        <h3>${courseData.course.code}: ${courseData.course.title}</h3>
+                        <p> ${courseData.honorlock.description}</p>
+                        <p> ${courseData.honorlock.requirements}</p>
+                        <p> ${courseData.honorlock.validIds}</p>
+                        <p> ${courseData.honorlock.recording}</p>
+                        <p> ${courseData.honorlock.practiceExam}</p>
+                    </div>
+                `;
+            }  
+
            
-            return `I can help you with information about course details, instructor contact, schedule, grading, materials, and objectives. Try asking about any of these topics, or use the quick buttons for common questions.`;
+            return `I am not sure about that. Try rephrasing your question using different words. If I can't find the answer, please contact Mr. Scarborough`;
         }
 
         function sendMessage() {
