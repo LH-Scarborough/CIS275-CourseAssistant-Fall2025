@@ -436,7 +436,7 @@
 
         function generateResponse(userInput) {
             const input = userInput.toLowerCase();
-            
+        //Course Information    
             if (input.includes('course info') || input.includes('about the course')) {
                 return `
                     <div class="course-info">
@@ -450,6 +450,7 @@
                 `;
             }
             
+         // Instructor Information   
             if (input.includes('instructor') || input.includes('contact') || input.includes('teacher') || input.includes('professor')) {
                 return `
                     <div class="course-info">
@@ -471,7 +472,7 @@
                     </div>
                 `;
             }
-            
+      // Course Schedule      
             if (input.includes('schedule') || input.includes('dates') || input.includes('calendar')) {
                 let scheduleHtml = `
                     <div class="course-info">
@@ -506,6 +507,7 @@
                 return scheduleHtml;
             }
             
+       // Grading Policies     
             if (input.includes('grading') || input.includes('grade')) {
                 return `
                     <div class="course-info">
@@ -544,7 +546,8 @@
                     </div>
                 `;
             }
-            
+
+            // Course Materials
             if (input.includes('materials') || input.includes('textbook') || input.includes('book') || input.includes('code') || input.includes('access code') || input.includes('codes') || input.includes('access codes') || input.includes('book store')) {
                 return `
                     <div class="course-info">
@@ -557,7 +560,8 @@
                     </div>
                 `;
             }
-            
+
+            // Course Objectives
             if (input.includes('objectives') || input.includes('goals')) {
                 return `
                     <div class="course-info">
@@ -569,7 +573,8 @@
                     </div>
                 `;
             }
- 
+
+            // Proctoring Policies
  if (input.includes('proctoring') || input.includes('proctor') || input.includes('proctored quiz') || input.includes('proctored') || input.includes('honorlock') || input.includes('webcam')) {
                 return `
                     <div class="course-info">
@@ -594,6 +599,31 @@
                 `;
             }
 
+// External Webcam Policy
+                
+ if (input.includes('webcam') || input.includes('external') || input.includes('web cam')) {
+                return `
+                    <div class="course-info">
+                        <h3>External Webcam Policy</h3>
+                        <p><strong>Overview:</strong> This course requires the use of an external webcam, one that connects to an external computer port (such as a USB) rather than a webcam built into the computer. 
+                        A camera built into your computer will NOT be sufficient for this course. The purpose of an external webcam is to provide a view across the student's work area. 
+                        This camera will be used to take your proctored exams and some quizzes. If you have not read the general Honorlock proctoring guidelines, review those carefully before continuing since those requirements 
+                        will be enforced along with any information below. Before taking any proctored exam, watch the External Webcam Instructions & Tutorial video below.</p>
+                        <p></p>
+                        <p><strong>External Webcam Specifications:</strong> Your external webcam must have a resolution of at least 720p.</p>
+                        
+                        <h4>External Webcam Availability</h4>
+                        <ul>
+                            <li>A limited number of webcams may be available for loan through the ESCC library (see resources below).</li>
+                            <li>A limited number of webcams may be purchased through the bookstore using some, but not all, types of financial aid (see resources below).</li>
+                            <li>A webcam may be purchased through any retailer as long as it meets the specifications above.</li>
+                            <li>ESCC has a limited number of testing rooms for students who wish to test on campus using our computers and external webcams.</li>
+                        </ul>
+                        <p><strong>*Do NOT purchase the Walmart Branded Camera (ONN) which is NOT compatible with most proctoring tools.</strong></p>
+                    </div>
+                `;
+            }
+// Course Expectations
  if (input.includes('expectations') || input.includes('communication') || input.includes('responsibility') || input.includes('course expectations') || input.includes('professionalism')) {
                 return `
                     <div class="course-info">
@@ -606,6 +636,7 @@
                 `;
             }
 
+            // Artificial Intelligience Policies
             if (input.includes('ai') || input.includes('artificial intelligence') || input.includes('chatgpt') || input.includes('chat gpt') || input.includes('gpt') || input.includes('ai tool') || input.includes('ai tools')) {
     return `
         <div class="course-info">
