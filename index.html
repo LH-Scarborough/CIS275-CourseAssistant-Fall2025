@@ -567,18 +567,56 @@
                 `;
             }
  
-           if (input.includes('proctoring') || input.includes('proctor') || input.includes('proctored quiz' input.includes('proctored')) {
+ if (input.includes('proctoring') || input.includes('proctor') || input.includes('proctored quiz') || input.includes('proctored') || input.includes('honorlock')) {
                 return `
                     <div class="course-info">
-                        <h3>${courseData.course.code}: ${courseData.course.title}</h3>
-                        <p> ${courseData.proctoring.policy}</p>
-                        <p> ${courseData.proctoring.requirements}</p>
-                        <p> ${courseData.proctoring.responsibility}</p>
-                        <p> ${courseData.proctoring.courseSpecific}</p>
+                        <h3>Proctoring Information</h3>
+                        <p><strong>Policy:</strong> Enterprise State Community College utilizes remote proctoring to ensure online academic integrity. Each distance education course will include a practice proctored quiz before the first proctored exam.</p>
+                        <p><strong>Requirements:</strong> Students must complete practice quiz in timely manner to ensure they have equipment and software needed.</p>
+                        <p><strong>Student Responsibility:</strong> Students in online courses must fulfill their responsibilities in arranging and taking each proctored exam.</p>
+                        <p><strong>Course Specific:</strong> This course contains one proctored quiz available in the Modules section.</p>
+                        
+                        <h4>Honorlock Information</h4>
+                        <p><strong>Description:</strong> ESCC utilizes Honorlock online proctoring solution for distance learning courses.</p>
+                        <p><strong>Requirements:</strong></p>
+                        <ul>
+                            <li>Download and install Chrome extension</li>
+                            <li>Provide valid photo ID</li>
+                            <li>Complete scan of testing environment</li>
+                        </ul>
+                        <p><strong>Valid IDs:</strong> Driver's license, U.S. passport, College-issued student ID, or Military ID</p>
+                        <p><strong>Recording:</strong> Audio, video, and student's computer screen are recorded during exam and reviewed by instructors.</p>
+                        <p><strong>Practice Exam:</strong> Honorlock practice exam walks through Chrome extension installation process.</p>
                     </div>
                 `;
             }
 
+            if (input.includes('honorlock')) {
+    return `
+        <div class="course-info">
+            <h3>Honorlock Information</h3>
+            <p><strong>Description:</strong> ESCC utilizes Honorlock online proctoring solution for distance learning courses.</p>
+            
+            <h4>Requirements:</h4>
+            <ul>
+                <li>Download and install Chrome extension</li>
+                <li>Provide valid photo ID</li>
+                <li>Complete scan of testing environment</li>
+            </ul>
+            
+            <h4>Valid IDs:</h4>
+            <ul>
+                <li>Driver's license</li>
+                <li>U.S. passport</li>
+                <li>College-issued student ID</li>
+                <li>Military ID</li>
+            </ul>
+            
+            <p><strong>Recording:</strong> Audio, video, and student's computer screen are recorded during exam and reviewed by instructors.</p>
+            <p><strong>Practice Exam:</strong> Honorlock practice exam walks through Chrome extension installation process.</p>
+        </div>
+    `;
+}
 
            
             return `I am not sure about that. Try rephrasing your question using different words. If I can't find the answer, please contact Mr. Scarborough`;
