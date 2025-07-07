@@ -165,6 +165,56 @@
       ]
     }
   },
+  {
+  "title": "External Webcam",
+  "requirement": {
+    "description": "This course requires the use of an external webcam, one that connects to an external computer port (such as a USB) rather than a webcam built into the computer.",
+    "built_in_camera_sufficient": false,
+    "purpose": "To provide a view across the student's work area",
+    "usage": [
+      "proctored exams",
+      "some quizzes"
+    ],
+    "additional_requirements": "Review general Honorlock proctoring guidelines before continuing"
+  },
+  "specifications": {
+    "minimum_resolution": "720p"
+  },
+  "preparation": {
+    "required_video": "External Webcam Instructions & Tutorial video"
+  },
+  "availability_options": [
+    {
+      "source": "ESCC library",
+      "type": "loan",
+      "availability": "limited number"
+    },
+    {
+      "source": "bookstore",
+      "type": "purchase",
+      "payment_method": "some, but not all, types of financial aid",
+      "availability": "limited number"
+    },
+    {
+      "source": "any retailer",
+      "type": "purchase",
+      "condition": "must meet specifications above"
+    },
+    {
+      "source": "ESCC testing rooms",
+      "type": "on-campus testing",
+      "description": "test on campus using our computers and external webcams",
+      "availability": "limited number"
+    }
+  ],
+  "incompatible_products": [
+    {
+      "brand": "Walmart Branded Camera (ONN)",
+      "reason": "NOT compatible with most proctoring tools",
+      "recommendation": "Do NOT purchase"
+    }
+  ]
+}
   "schedule": [
     {
       "dates": "August 18 - 25",
