@@ -537,7 +537,10 @@
                             <li>F: ${courseData.grading.scale.F}</li>
                         </ul>
                         <p><strong>Note:</strong> ${courseData.grading.droppedGrades.note}</p>
-                        <p>All current grades for the class are available through the Grades link in the Canvas course.</p>
+                        <p></p>
+                        <p>All <strong>current grades</strong> for the class are available through the Grades link in the Canvas course.</p>
+                        <p></p>
+                        <p>Students' <strong>final grade</strong> will be posted in MyESCC.</p>
                     </div>
                 `;
             }
@@ -567,7 +570,7 @@
                 `;
             }
  
- if (input.includes('proctoring') || input.includes('proctor') || input.includes('proctored quiz') || input.includes('proctored') || input.includes('honorlock')) {
+ if (input.includes('proctoring') || input.includes('proctor') || input.includes('proctored quiz') || input.includes('proctored') || input.includes('honorlock') || input.includes('webcam')) {
                 return `
                     <div class="course-info">
                         <h3>Proctoring Information</h3>
@@ -591,7 +594,162 @@
                 `;
             }
 
-            if (input.includes('honorlock')) {
+ if (input.includes('expectations') || input.includes('communication') || input.includes('responsibility') || input.includes('course expectations') || input.includes('professionalism')) {
+                return `
+                    <div class="course-info">
+                        <h3>Course Expectations</h3>
+                        <p><strong>Personal Responsibility:</strong> Students are responsible for their own actions, time management, and meeting deadlines for all course assignments.</p>
+                        <p><strong>Communication:</strong>Students should regularly reach out to the instructor with questions or concerns. All communication must be professional—whether by email, Canvas, phone, or video call.</p>
+                        <p><strong>Weekly Work:</strong> Each week, students are expected to read assigned material and complete all activities and assignments in the module. Late assignments will receive a zero.</p>
+                        <p><strong>Professionalism:</strong> Communication should be respectful, clear, and use proper grammar and complete sentences. Canvas messaging will be the main form of contact, with other methods used as needed.</p>
+                    </div>
+                `;
+            }
+
+            if (input.includes('ai') || input.includes('artificial intelligence') || input.includes('chatgpt') || input.includes('chat gpt') || input.includes('gpt') || input.includes('ai tool') || input.includes('ai tools')) {
+    return `
+        <div class="course-info">
+            <h3>Artificial Intelligence Policy</h3>
+            <p><strong>Encouragement:</strong> Students are encouraged to use AI as a tool to assist with learning and efficiency in this course.</p>
+            
+            <h4>Discussion Assignments:</h4>
+            <p>For discussion assignments, students should compose their own thoughts, but are encouraged to use AI tools to revise, enhance, and improve their own writings.</p>
+            
+            <div class="warning-box" style="background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 6px; padding: 15px; margin: 15px 0;">
+                <h4 style="color: #721c24; margin-bottom: 10px;">⚠️ Important Warning</h4>
+                <p style="color: #721c24; margin-bottom: 5px;"><strong>Academic Honesty Violation:</strong> Submitting any work that is not your own is a violation of the college's Academic Honesty policy and will be subject to penalties.</p>
+            </div>
+            
+            <p><strong>Remember:</strong> AI should enhance your learning and help improve your own work, not replace your original thinking and effort.</p>
+        </div>
+    `;
+}
+            // Academic Honesty Policy
+if (input.includes('academic honesty') || input.includes('plagiarism') || input.includes('cheating') || input.includes('original work')) {
+    return `
+        <div class="course-info">
+            <h3>Academic Honesty Policy</h3>
+            <p><strong>Original Work:</strong> All work must be your own and written exclusively for this course.</p>
+            <p><strong>Recycling:</strong> Students may not recycle or reuse work from another course.</p>
+            
+            <h4>Plagiarism Consequences:</h4>
+            <ul>
+                <li>Zero on assignment</li>
+                <li>F for final course grade</li>
+                <li>Reported to Dean of Instruction</li>
+            </ul>
+            
+            <p><strong>Inadvertent Plagiarism:</strong> Dealt with on a case-by-case basis, most result in failing grade on assignment.</p>
+        </div>
+    `;
+}
+
+// Late Work and Penalties
+if (input.includes('late work') || input.includes('late assignment') || input.includes('due date') || input.includes('penalty') || input.includes('extenuating circumstances')) {
+    return `
+        <div class="course-info">
+            <h3>Assignment Policies</h3>
+            <p><strong>Submission:</strong> All assignments must be submitted by the given due date.</p>
+            
+            <h4>Due Date Sources:</h4>
+            <ul>
+                <li>Canvas learning modules</li>
+                <li>Canvas Calendar</li>
+                <li>Course Schedule</li>
+                <li>Syllabus</li>
+            </ul>
+            
+            <h4>Penalties:</h4>
+            <p><strong>Late Work:</strong> Zero for assignment not submitted by due date.</p>
+            <p><strong>Extenuating Circumstances:</strong> Considered if student provides notice at least 24 hours prior to due date, or within 24 hours after due date.</p>
+            <p><strong>Documentation:</strong> Instructor may request documentation for proof of extenuating circumstances.</p>
+        </div>
+    `;
+}
+
+// Withdrawal Policy
+if (input.includes('withdrawal') || input.includes('withdraw') || input.includes('drop') || input.includes('last day')) {
+    return `
+        <div class="course-info">
+            <h3>Withdrawal Policy</h3>
+            <p><strong>Last Day to Withdraw:</strong> July 24th</p>
+            <p><strong>Important Note:</strong> Withdrawal can affect eligibility for federal financial aid.</p>
+        </div>
+    `;
+}
+
+// Student Conduct
+if (input.includes('conduct') || input.includes('expectations') || input.includes('behavior') || input.includes('responsibility')) {
+    return `
+        <div class="course-info">
+            <h3>Student Conduct Expectations</h3>
+            <ul>
+                <li>Accept personal responsibility for decisions and actions</li>
+                <li>Manage time appropriately</li>
+                <li>Engage with course and complete assignments by due date</li>
+                <li>Ask questions and communicate with instructor as needed</li>
+                <li>Use professional communication</li>
+            </ul>
+        </div>
+    `;
+}
+
+// Disability Services
+if (input.includes('disability') || input.includes('ada') || input.includes('accommodation') || input.includes('accessibility')) {
+    return `
+        <div class="course-info">
+            <h3>Disability Services</h3>
+            <p><strong>Compliance:</strong> Americans with Disabilities Act, 1990</p>
+            <p><strong>Contact:</strong> Dava Leverette, ESCC ADA Services Coordinator</p>
+            <p><strong>Email:</strong> dleverette@escc.edu</p>
+        </div>
+    `;
+}
+
+// Academic Assistance/Tutoring
+if (input.includes('help') || input.includes('tutoring') || input.includes('assistance') || input.includes('support') || input.includes('boll weevil')) {
+    return `
+        <div class="course-info">
+            <h3>Academic Assistance</h3>
+            <p><strong>Primary:</strong> Contact instructor first</p>
+            
+            <h4>Tutoring Services:</h4>
+            <p><strong>Service:</strong> Boll Weevil Central</p>
+            <p><strong>Cost:</strong> Free to all students</p>
+            <p><strong>Access:</strong> Accept invitation in Canvas dashboard during first week</p>
+            
+            <p><strong>Additional Support:</strong> Student Support Services program</p>
+        </div>
+    `;
+}
+
+// Final Grades
+if (input.includes('final grade') || input.includes('final grades') || input.includes('myescc') || input.includes('student information center')) {
+    return `
+        <div class="course-info">
+            <h3>Final Grades</h3>
+            <p><strong>Location:</strong> Student Information Center via MyESCC link</p>
+            <p><strong>Access:</strong> Log into student account, not Canvas</p>
+            <p><strong>Communication:</strong> Final grades not given via email or phone</p>
+        </div>
+    `;
+}
+
+// Division Chair
+if (input.includes('division chair') || input.includes('chair') || input.includes('jennifer nelson')) {
+    return `
+        <div class="course-info">
+            <h3>Division Chair</h3>
+            <p><strong>Name:</strong> Jennifer Nelson</p>
+            <p><strong>Office:</strong> Forrester Hall 103</p>
+            <p><strong>Phone:</strong> (334) 347-2623 ext. 2338</p>
+            <p><strong>Email:</strong> jnelson@escc.edu</p>
+        </div>
+    `;
+}
+
+// Honorlock (separate from proctoring)
+if (input.includes('honorlock')) {
     return `
         <div class="course-info">
             <h3>Honorlock Information</h3>
@@ -618,6 +776,25 @@
     `;
 }
 
+// AI Policy
+if (input.includes('ai') || input.includes('artificial intelligence') || input.includes('chatgpt') || input.includes('chat gpt') || input.includes('gpt') || input.includes('ai tool') || input.includes('ai tools')) {
+    return `
+        <div class="course-info">
+            <h3>Artificial Intelligence Policy</h3>
+            <p><strong>Encouragement:</strong> Students are encouraged to use AI as a tool to assist with learning and efficiency in this course.</p>
+            
+            <h4>Discussion Assignments:</h4>
+            <p>For discussion assignments, students should compose their own thoughts, but are encouraged to use AI tools to revise, enhance, and improve their own writings.</p>
+            
+            <div style="background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 6px; padding: 15px; margin: 15px 0;">
+                <h4 style="color: #721c24; margin-bottom: 10px;">⚠️ Important Warning</h4>
+                <p style="color: #721c24;"><strong>Academic Honesty Violation:</strong> Submitting any work that is not your own is a violation of the college's Academic Honesty policy and will be subject to penalties.</p>
+            </div>
+            
+            <p><strong>Remember:</strong> AI should enhance your learning and help improve your own work, not replace your original thinking and effort.</p>
+        </div>
+    `;
+}
            
             return `I am not sure about that. Try rephrasing your question using different words. If I can't find the answer, please contact Mr. Scarborough`;
         }
