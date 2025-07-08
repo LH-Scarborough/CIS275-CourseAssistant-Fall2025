@@ -546,7 +546,17 @@
                     </div>
                 `;
             }
-
+            
+//Dropped Grades
+if (input.includes('drop')) {
+    return `
+        <div class="course-info">
+            <h3>Dropped Grades</h3>
+            <p><strong>The following grades will be dropped for each student: 1 lowest <strong>exam</strong> grade, 1 lowest <strong>lab</strong> grade, 2 lowest <strong>quiz</strong> grades, and 2 lowest <sdtrong>discussion</strong> grades. These dropped scores are automatic, meaning even if you scored a 100
+            on everything, it would still drop the selected number of scores from each assignment group. Dropped scores in no way negatively affect the final grade.</p>
+        </div>
+    `;
+}
             // Course Materials
             if (input.includes('materials') || input.includes('textbook') || input.includes('book') || input.includes('code') || input.includes('access code') || input.includes('codes') || input.includes('access codes') || input.includes('book store')) {
                 return `
@@ -699,7 +709,7 @@ if (input.includes('late work') || input.includes('late assignment') || input.in
 }
 
 // Withdrawal Policy
-if (input.includes('withdrawal') || input.includes('withdraw') || input.includes('drop') || input.includes('last day')) {
+if (input.includes('withdrawal') || input.includes('withdraw') || input.includes('last day')) {
     return `
         <div class="course-info">
             <h3>Withdrawal Policy</h3>
