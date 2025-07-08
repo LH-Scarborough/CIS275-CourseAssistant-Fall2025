@@ -91,8 +91,10 @@
       "F": "0-59%"
     },
     "droppedGrades": {
-      "labs": 5,
-      "practiceQuestions": 5,
+      "labs": 1,
+      "quizzes": 2,
+      "exams": 1
+      "discussions": 2
       "note": "Dropped scores are automatic and do not negatively affect final grade"
     }
   },
